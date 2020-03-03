@@ -6,7 +6,7 @@
 /*   By: vgallois <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 15:03:41 by vgallois          #+#    #+#             */
-/*   Updated: 2020/02/27 17:47:53 by vgallois         ###   ########.fr       */
+/*   Updated: 2020/03/03 17:04:03 by vgallois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,21 @@
 char	*rt_getrgb(t_rtlst **lst, char *s)
 {
 	char	**split;
+	int		r;
+	int		g;
+	int		b;
 
 	if (!(split = ft_split(s, ',')) || !split[0] || !split[1] || !split[2])
 		return ("Color error\n");
-	(*lst)->rgb = ft_atoi(split[0]) * 65536 + ft_atoi(split[1]) * 256
-			+ ft_atoi(split[2]);
+	r = ft_atoi(split[0]);
+	g = ft_atoi(split[1]);
+	b = ft_atoi(split[2]);
+	if (r > 255 || r < 0 || g > 255 || g < 0 | b > 255 || b < 0)
+	{
+		rt_deletesplit(split);
+		return ("Color error\n");
+	}
+	(*lst)->rgb = r * 65536 + g * 256 + b;
 	rt_deletesplit(split);
 	return (NULL);
 }
@@ -48,7 +58,10 @@ char	*rt_getvect(t_rtlst **lst, char *s)
 	(*lst)->vy = ft_atof(split[1]);
 	(*lst)->vz = ft_atof(split[2]);
 	rt_deletesplit(split);
-	return (NULL);
+	return (((*lst)->vx >= -1 && (*lst)->vx <= 1 && (*lst)->vy >= -1
+			&& (*lst)->vy <= 1 && (*lst)->vz >= -1 && (*lst)->vz <= 1
+			&& ((*lst)->vx || (*lst)->vy || (*lst)->vz))
+			? NULL : "Vector value error\n");
 }
 
 char	*rt_parse_t(t_mlx *mlx, char **split)
@@ -56,7 +69,7 @@ char	*rt_parse_t(t_mlx *mlx, char **split)
 	char	***tab;
 	t_rtlst	*tmp;
 
-	if (!split[1] || !split[2] || !split[3] || !split[4]
+	if (!split[1] || !split[2] || !split[3] || !split[4] || split[5]
 			|| !(tab = malloc(sizeof(*tab) * 3))
 			|| !(tab[0] = ft_split(split[2], ','))
 			|| !(tab[1] = ft_split(split[3], ',')) || !tab[0][0] || !tab[0][1]

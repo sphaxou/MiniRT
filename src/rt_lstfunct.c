@@ -6,7 +6,7 @@
 /*   By: vgallois <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 13:15:40 by vgallois          #+#    #+#             */
-/*   Updated: 2020/02/27 16:58:19 by vgallois         ###   ########.fr       */
+/*   Updated: 2020/03/03 14:28:56 by vgallois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,15 @@ void	rt_lstaddback(t_rtlst **alst, t_rtlst *new)
 		lst = lst->next;
 	lst->next = new;
 }
+
+void	rt_lstaddfront(t_rtlst **alst, t_rtlst *new)
+{
+	if (!new)
+		return ;
+	new->next = *alst;
+	*alst = new;
+}
+
 
 t_rtlst	*rt_lstlast(t_rtlst *lst)
 {

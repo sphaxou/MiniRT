@@ -6,7 +6,7 @@
 /*   By: vgallois <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 18:30:07 by vgallois          #+#    #+#             */
-/*   Updated: 2020/02/27 18:12:07 by vgallois         ###   ########.fr       */
+/*   Updated: 2020/03/03 17:01:20 by vgallois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char		*rt_parse_a(t_mlx *mlx, char **split)
 {
 	char	**tab;
 
-	if (mlx->a || !split[1] || !split [2])
+	if (mlx->a || !split[1] || !split[2] || split[3])
 		return ("File g_err\n");
 	if (!(tab = ft_split(split[2], ',')))
 		return ("Malloc g_err\n");
@@ -56,34 +56,24 @@ char		*rt_parse_a(t_mlx *mlx, char **split)
 	mlx->rgb = ft_atoi(tab[0]) * 65536 + ft_atoi(tab[1]) * 256
 			+ ft_atoi(tab[2]);
 	rt_deletesplit(tab);
-	return (NULL);
+	return ((mlx->a >= 0 && mlx->a <= 1) ? NULL : "Ambiant light error\n");
 }
 
 char		*rt_parse_cam(t_mlx *mlx, char **split)
 {
-	char	**tab;
-	char	**tab2;
+	t_rtlst	*tmp;
 
-	if (!split[1] || !split[2] || !split[3])
+	if (!split[1] || !split[2] || !split[3] || split[4])
+		return ("File error\n");
+	tmp = rt_lstnew();
+	if (!tmp)
 		return ("File g_err\n");
-	if (!(tab = ft_split(split[1], ',')) || !(tab2 = ft_split(split[2], ',')))
-		return ("Malloc g_err\n");
-	if (!tab[0] || !tab[1] || !tab[2] || !tab2[0] || !tab2[1] || !tab2[2])
-	{
-			rt_deletesplit(tab);
-			rt_deletesplit(tab);
-		return ("File g_err\n");
-	}
-	mlx->cam.x = ft_atof(tab[0]);
-	mlx->cam.y = ft_atof(tab[1]);
-	mlx->cam.z = ft_atof(tab[2]);
-	mlx->cam.vx = ft_atof(tab2[0]);
-	mlx->cam.vy = ft_atof(tab2[1]);
-	mlx->cam.vz = ft_atof(tab2[2]);
-	mlx->cam.fov = ft_atoi(split[3]);
-	rt_deletesplit(tab2);
-	rt_deletesplit(tab);
-	return (NULL);
+	if ((g_err = rt_getxyz(&tmp, split[1]))
+			|| (g_err = rt_getvect(&tmp, split[2])))
+		return (g_err);
+	tmp->fov = ft_atoi(split[3]);
+	rt_lstaddfront(&mlx->cam, tmp);
+	return ((tmp->fov > 0 && tmp->fov <= 180) ? NULL : "Camera Error\n");
 }
 
 char		*rt_parse(t_mlx *mlx, char *name)

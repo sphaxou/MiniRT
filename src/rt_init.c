@@ -6,7 +6,7 @@
 /*   By: vgallois <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 18:48:01 by vgallois          #+#    #+#             */
-/*   Updated: 2020/02/27 18:42:53 by vgallois         ###   ########.fr       */
+/*   Updated: 2020/03/03 16:36:13 by vgallois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 t_mlx	*rt_init(char *name)
 {
 	t_mlx	*mlx;
+	int		x;
+	//int		y;
 
 	if (!(mlx = ft_memalloc(sizeof(t_mlx))))
 		return (NULL);
@@ -28,5 +30,13 @@ t_mlx	*rt_init(char *name)
 		return (NULL);
 	}
 	mlx->win = mlx_new_window(mlx->ptr, mlx->x, mlx->y, name);
+	x = 0;
+	/*while (x < mlx->x)
+	{
+		y = 0;
+		while (y < mlx->y)
+			mlx_pixel_put(mlx->ptr, mlx->win, x, y++, mlx->rgb);
+		x++;
+	}*/
 	return (mlx);
 }

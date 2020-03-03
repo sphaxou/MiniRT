@@ -6,7 +6,7 @@
 /*   By: vgallois <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 13:37:26 by vgallois          #+#    #+#             */
-/*   Updated: 2020/02/27 18:10:34 by vgallois         ###   ########.fr       */
+/*   Updated: 2020/03/03 16:29:17 by vgallois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,9 @@ typedef struct		s_rtlst
 	float			dia;
 	float			ratio;
 	float			h;
+	int				fov;
 	struct s_rtlst	*next;
 }					t_rtlst;
-
-typedef struct		s_cam
-{
-	float			x;
-	float			y;
-	float			z;
-	float			vx;
-	float			vy;
-	float			vz;
-	int				fov;
-}					t_cam;
 
 typedef struct		s_mlx
 {
@@ -65,7 +55,7 @@ typedef struct		s_mlx
 	int				rgb;
 	int				x;
 	int				y;
-	t_cam			cam;
+	t_rtlst			*cam;
 	t_rtlst			*obj;
 	t_rtlst			*lum;
 }					t_mlx;
@@ -91,7 +81,15 @@ char				*rt_getxyz(t_rtlst **lst, char *line);
 char				*rt_getvect(t_rtlst **lst, char *line);
 char				*rt_getrgb(t_rtlst **lst, char *line);
 void				rt_deletesplit(char **split);
+
+char				*rt_check_r(t_mlx *mlx);
+char				*rt_check_a(t_mlx *mlx);
+char				*rt_check_cam(t_rtlst *lst);
+char				*rt_check_l(t_rtlst *lst);
+char				*rt_check_obj(t_rtlst *lst);
+
 t_rtlst				*rt_lstnew(void);
+void				rt_lstaddfront(t_rtlst **alst, t_rtlst *new);
 void				rt_lstaddback(t_rtlst **alst, t_rtlst *new);
 t_rtlst				*rt_lstlast(t_rtlst *lst);
 

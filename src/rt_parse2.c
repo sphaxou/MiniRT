@@ -6,7 +6,7 @@
 /*   By: vgallois <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 13:08:13 by vgallois          #+#    #+#             */
-/*   Updated: 2020/02/27 18:09:39 by vgallois         ###   ########.fr       */
+/*   Updated: 2020/03/03 17:03:40 by vgallois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char		*rt_parse_l(t_mlx *mlx, char **split)
 {
 	t_rtlst	*tmp;
 
-	if (!split[1] || !split[2] || !split[3])
+	if (!split[1] || !split[2] || !split[3] || split[4])
 		return ("File error\n");
 	tmp = rt_lstnew();
 	if ((g_err = rt_getxyz(&tmp, split[1]))
@@ -25,13 +25,15 @@ char		*rt_parse_l(t_mlx *mlx, char **split)
 		return (g_err);
 	tmp->ratio = ft_atof(split[2]);
 	rt_lstaddback(&mlx->lum, tmp);
-	return (NULL);
+	return ((tmp->ratio >= 0 && tmp->ratio <= 1) ? NULL : "Light error\n");
 }
 
 char		*rt_parse_sp(t_mlx *mlx, char **split)
 {
 	t_rtlst	*tmp;
 
+	if (!split[1] || !split[2] || !split[3] || split[4])
+		return ("File error\n");
 	if (!(tmp = rt_lstnew()))
 		return ("Malloc error\n");
 	tmp->id = 1;
@@ -47,7 +49,7 @@ char		*rt_parse_p(t_mlx *mlx, char **split)
 {
 	t_rtlst	*tmp;
 
-	if (!split[1] || !split[2] || !split[3])
+	if (!split[1] || !split[2] || !split[3] || split[4])
 		return ("File error\n");
 	if (!(tmp = rt_lstnew()))
 		return ("Malloc error\n");
@@ -64,7 +66,8 @@ char		*rt_parse_sq(t_mlx *mlx, char **split)
 {
 	t_rtlst	*tmp;
 
-	if (!split[1] || !split[2] || !split[3] ||!split[4] || !(tmp = rt_lstnew()))
+	if (!split[1] || !split[2] || !split[3] ||!split[4] || split[5]
+			|| !(tmp = rt_lstnew()))
 		return ("File error\n");
 	tmp->id = 3;
 	if ((g_err = rt_getxyz(&tmp, split[1]))
@@ -81,7 +84,7 @@ char		*rt_parse_cy(t_mlx *mlx, char **split)
 	t_rtlst	*tmp;
 
 	if (!split[1] || !split[2] || !split[3] ||!split[4] || !split[5]
-			|| !(tmp = rt_lstnew()))
+			|| split[6] || !(tmp = rt_lstnew()))
 		return ("File error\n");
 	if ((g_err = rt_getxyz(&tmp, split[1]))
 			|| (g_err = rt_getvect(&tmp, split[2]))

@@ -6,7 +6,7 @@
 /*   By: vgallois <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 13:32:40 by vgallois          #+#    #+#             */
-/*   Updated: 2020/02/27 18:24:06 by vgallois         ###   ########.fr       */
+/*   Updated: 2020/03/03 14:27:16 by vgallois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,18 @@ void	checklum(t_rtlst *lst)
 	checklum(lst->next);
 }
 
+void	checkcam(t_rtlst *lst)
+{
+	if (!lst)
+		return ;
+	printf("cam\n%f %f %f\n%f %f %f\nfov %d\n", lst->x, lst->y, lst->z, lst->vx, lst->vy, lst->vz, lst->fov);
+	checkcam(lst->next);
+}
+
 void	check(t_mlx *mlx)
 {
-	printf("%p\n%p\na %f r %d rgb %x x %d y %d\ncam:%f %f %f\n%f %f %f\n%d\n", mlx->ptr, mlx->win, mlx->a, mlx->r, mlx->rgb, mlx->x, mlx->y, mlx->cam.x, mlx->cam.y, mlx->cam.z, mlx->cam.vx, mlx->cam.vy, mlx->cam.vz, mlx->cam.fov);
+	printf("%p\n%p\na %f r %d rgb %x x %d y %d\n", mlx->ptr, mlx->win, mlx->a, mlx->r, mlx->rgb, mlx->x, mlx->y);
+	checkcam(mlx->cam);
 	checkobj(mlx->obj);
 	checklum(mlx->lum);
 }
