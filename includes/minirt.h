@@ -6,14 +6,14 @@
 /*   By: vgallois <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 13:37:26 by vgallois          #+#    #+#             */
-/*   Updated: 2020/03/03 16:29:17 by vgallois         ###   ########.fr       */
+/*   Updated: 2020/03/10 21:31:54 by vgallois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 #include <stdio.h>
-
+# define MAX_DIST 10000.0
 /*
 ** id des objets:
 ** 1 sphere
@@ -22,6 +22,13 @@
 ** 4 cylindre
 ** 5 triangle
 */
+
+typedef struct		s_vect
+{
+	float			vx;
+	float			vy;
+	float			vz;
+}					t_vect;
 
 typedef struct		s_rtlst
 {
@@ -87,6 +94,13 @@ char				*rt_check_a(t_mlx *mlx);
 char				*rt_check_cam(t_rtlst *lst);
 char				*rt_check_l(t_rtlst *lst);
 char				*rt_check_obj(t_rtlst *lst);
+
+void				rt_rot(t_rtlst *lst, t_rtlst *angle);
+void				rt_anti_rot(t_rtlst *lst, t_rtlst *angle);
+
+char				*rt_render(t_mlx *mlx, t_rtlst *cam);
+float				rt_intersect_sphere(t_rtlst ray, t_rtlst *obj, float alpha);
+void				rt_cast(float x, float y, t_mlx *mlx, t_rtlst *cam);
 
 t_rtlst				*rt_lstnew(void);
 void				rt_lstaddfront(t_rtlst **alst, t_rtlst *new);

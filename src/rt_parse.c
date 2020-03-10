@@ -6,7 +6,7 @@
 /*   By: vgallois <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 18:30:07 by vgallois          #+#    #+#             */
-/*   Updated: 2020/03/03 17:01:20 by vgallois         ###   ########.fr       */
+/*   Updated: 2020/03/10 22:34:07 by vgallois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char		*rt_parse_cam(t_mlx *mlx, char **split)
 			|| (g_err = rt_getvect(&tmp, split[2])))
 		return (g_err);
 	tmp->fov = ft_atoi(split[3]);
-	rt_lstaddfront(&mlx->cam, tmp);
+	rt_lstaddback(&mlx->cam, tmp);
 	return ((tmp->fov > 0 && tmp->fov <= 180) ? NULL : "Camera Error\n");
 }
 

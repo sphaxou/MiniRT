@@ -6,7 +6,7 @@
 /*   By: vgallois <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 13:32:40 by vgallois          #+#    #+#             */
-/*   Updated: 2020/03/03 14:27:16 by vgallois         ###   ########.fr       */
+/*   Updated: 2020/03/10 21:46:44 by vgallois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,9 @@ int		main(int ac, char **av)
 		if (!(mlx = rt_init(av[1])))
 			return (0);
 		check(mlx);
+		rt_render(mlx, mlx->cam);
 		mlx_key_hook(mlx->win, rt_hook_keydown, mlx->ptr);
-		mlx_loop(mlx->ptr);
+//		mlx_loop(mlx->ptr);
 	}
 	return (0);
 }

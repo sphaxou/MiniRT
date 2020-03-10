@@ -6,7 +6,7 @@
 #    By: vgallois <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/24 13:19:21 by vgallois          #+#    #+#              #
-#    Updated: 2020/02/27 16:19:44 by vgallois         ###   ########.fr        #
+#    Updated: 2020/03/10 21:33:45 by vgallois         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,10 @@ SRC		= main.c \
 		  rt_parse3.c\
 		  rt_get_funct.c\
 		  rt_lstfunct.c\
+		  rt_render.c\
+		  rt_cast.c\
+		  rt_rot.c\
+		  rt_sphere.c\
 
 OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))
 
