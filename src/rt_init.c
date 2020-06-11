@@ -6,7 +6,7 @@
 /*   By: vgallois <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 18:48:01 by vgallois          #+#    #+#             */
-/*   Updated: 2020/03/03 16:36:13 by vgallois         ###   ########.fr       */
+/*   Updated: 2020/06/11 17:40:39 by vgallois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_mlx	*rt_init(char *name)
 		ft_putstr(g_err);
 		return (NULL);
 	}
+	printf("%d %d\n", mlx->x, mlx->y);
 	mlx->win = mlx_new_window(mlx->ptr, mlx->x, mlx->y, name);
 	x = 0;
 	/*while (x < mlx->x)

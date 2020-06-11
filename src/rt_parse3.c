@@ -6,7 +6,7 @@
 /*   By: vgallois <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 15:03:41 by vgallois          #+#    #+#             */
-/*   Updated: 2020/03/03 17:04:03 by vgallois         ###   ########.fr       */
+/*   Updated: 2020/06/11 14:32:36 by vgallois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ char	*rt_getrgb(t_rtlst **lst, char *s)
 		rt_deletesplit(split);
 		return ("Color error\n");
 	}
-	(*lst)->rgb = r * 65536 + g * 256 + b;
+	(*lst)->r = r;
+	(*lst)->g = g;
+	(*lst)->b = b;
 	rt_deletesplit(split);
 	return (NULL);
 }

@@ -6,36 +6,38 @@
 /*   By: vgallois <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 17:29:18 by vgallois          #+#    #+#             */
-/*   Updated: 2020/03/10 22:32:42 by vgallois         ###   ########.fr       */
+/*   Updated: 2020/06/11 21:54:44 by vgallois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-float	rt_intersect(t_rtlst ray, t_rtlst *obj, float alpha)
+t_rtlst	*rt_intersect(t_mlx *mlx, t_rtlst *obj, t_rtlst *cur)
 {
 	if (!obj)
-		return (alpha);
+		return (cur);
+	if (!cur)
+		cur = obj;
+//	printf("%d\n", obj->id);
 	if (obj->id == 1)
-		alpha = rt_intersect_sphere(ray, obj, alpha);
-	return (rt_intersect(ray, obj->next, alpha));
+		obj->dist = rt_intersect_sphere(mlx, obj);
+	if (obj->dist)
+		printf("%f\n", obj->dist);
+	if (obj->dist && obj->dist < cur->dist)
+		cur = obj;
+//	printf("%p\n", obj->next);
+	return (rt_intersect(mlx, obj->next, cur));
 }
 
-void	rt_cast(float x, float y, t_mlx *mlx, t_rtlst *cam)
+t_rtlst	*rt_cast(float x, float y, t_mlx *mlx)
 {
-	float	alpha;
-	t_rtlst	ray;
+	t_rtlst	*cur;
 
-	printf("mlx->x %d\tx: %f\t", mlx->x, x);
-	ray.vx = x - (float)mlx->x / 2;
-	ray.vy = y - (float)mlx->y / 2;
-	ray.vz = cam->fov;
-	rt_rot(&ray, cam);
-	printf("cam x: %.0f\n", cam->x);
-	ray.x = cam->x;
-	ray.y = cam->y;
-	ray.z = cam->z;
-	printf("vx %.02f vy %.02f vz %.02f\tx %.2f y %.2f z %.2f\n", ray.vx, ray.vy, ray.vz, ray.x, ray.y, ray.z);
-	alpha = rt_intersect(ray, mlx->obj, MAX_DIST);
-	printf("alpha = %f\n", alpha);
+	mlx->vx = x - mlx->x / 2;
+	mlx->vy = y - mlx->y / 2;
+	mlx->vz = mlx->cam->fov;
+	cur = rt_intersect(mlx, mlx->obj, NULL);
+	if (cur)
+		printf("cast done\n");
+	return (cur);
 }

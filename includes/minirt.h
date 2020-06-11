@@ -6,7 +6,7 @@
 /*   By: vgallois <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 13:37:26 by vgallois          #+#    #+#             */
-/*   Updated: 2020/03/10 21:31:54 by vgallois         ###   ########.fr       */
+/*   Updated: 2020/06/11 21:21:59 by vgallois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ typedef struct		s_rtlst
 	float			x3;
 	float			y3;
 	float			z3;
-	int				rgb;
+	int				r;
+	int				g;
+	int				b;
 	int				id;
 	float			vx;
 	float			vy;
@@ -50,6 +52,7 @@ typedef struct		s_rtlst
 	float			ratio;
 	float			h;
 	int				fov;
+	float			dist;
 	struct s_rtlst	*next;
 }					t_rtlst;
 
@@ -58,10 +61,15 @@ typedef struct		s_mlx
 	void			*ptr;
 	void			*win;
 	float			a;
+	int				res;
 	int				r;
-	int				rgb;
+	int				g;
+	int				b;
 	int				x;
 	int				y;
+	float			vx;
+	float			vy;
+	float			vz;
 	t_rtlst			*cam;
 	t_rtlst			*obj;
 	t_rtlst			*lum;
@@ -98,10 +106,10 @@ char				*rt_check_obj(t_rtlst *lst);
 void				rt_rot(t_rtlst *lst, t_rtlst *angle);
 void				rt_anti_rot(t_rtlst *lst, t_rtlst *angle);
 
-char				*rt_render(t_mlx *mlx, t_rtlst *cam);
-float				rt_intersect_sphere(t_rtlst ray, t_rtlst *obj, float alpha);
-void				rt_cast(float x, float y, t_mlx *mlx, t_rtlst *cam);
-
+char				*rt_render(t_mlx *mlx);
+float				rt_intersect_sphere(t_mlx *mlx, t_rtlst *obj);
+t_rtlst				*rt_cast(float x, float y, t_mlx *mlx);
+void				rt_put_pixel(t_mlx *mlx, t_rtlst *cur, float x, float y);
 t_rtlst				*rt_lstnew(void);
 void				rt_lstaddfront(t_rtlst **alst, t_rtlst *new);
 void				rt_lstaddback(t_rtlst **alst, t_rtlst *new);

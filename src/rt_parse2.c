@@ -6,7 +6,7 @@
 /*   By: vgallois <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 13:08:13 by vgallois          #+#    #+#             */
-/*   Updated: 2020/03/03 17:03:40 by vgallois         ###   ########.fr       */
+/*   Updated: 2020/06/11 17:29:18 by vgallois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char		*rt_parse_l(t_mlx *mlx, char **split)
 			|| (g_err = rt_getrgb(&tmp, split[3])))
 		return (g_err);
 	tmp->ratio = ft_atof(split[2]);
+	printf("%d %d %d %p\n", tmp->r, tmp->g, tmp->b, tmp->next);
 	rt_lstaddback(&mlx->lum, tmp);
 	return ((tmp->ratio >= 0 && tmp->ratio <= 1) ? NULL : "Light error\n");
 }
