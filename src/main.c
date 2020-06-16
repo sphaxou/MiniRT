@@ -6,7 +6,7 @@
 /*   By: vgallois <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 13:32:40 by vgallois          #+#    #+#             */
-/*   Updated: 2020/06/11 21:31:07 by vgallois         ###   ########.fr       */
+/*   Updated: 2020/06/16 17:38:33 by vgallois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int		main(int ac, char **av)
 		if (!(mlx = rt_init(av[1])))
 			return (0);
 		printf("init done\n");
-		check(mlx);
+	//	check(mlx);
 		rt_render(mlx);
 		mlx_key_hook(mlx->win, rt_hook_keydown, mlx->ptr);
 		mlx_loop(mlx->ptr);

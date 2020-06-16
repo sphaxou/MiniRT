@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_pixel.c                                         :+:      :+:    :+:   */
+/*   rt_plane.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgallois <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/11 21:02:05 by vgallois          #+#    #+#             */
-/*   Updated: 2020/06/16 18:23:13 by vgallois         ###   ########.fr       */
+/*   Created: 2020/06/16 19:12:47 by vgallois          #+#    #+#             */
+/*   Updated: 2020/06/16 19:24:48 by vgallois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include <mlx.h>
 
-int		rt_get_color(t_mlx *mlx, t_rtlst *cur)
+float	rt_intersect_plane(t_mlx *mlx, t_rtlst *obj)
 {
-	int	rgb;
-	(void)mlx;
-//	printf("rgb calc %d\n", cur);
-	rgb = cur ? 65536 * cur->r + 256 * cur->g + cur->b : 0;
-//	printf("rgb done %d\n", rgb);
-	return (rgb);
-}
+	float ln;
+	float t;
 
-void	rt_put_pixel(t_mlx *mlx, t_rtlst *cur, float x, float y)
-{
-//	printf("start put pixel\n");
-	mlx_pixel_put(mlx->ptr, mlx->win, x, y, rt_get_color(mlx, cur));
-//	printf("end put pixel\n");
+	ln = mlx->vx * obj->vx + mlx->vy * obj->vy + mlx->vz * obj->vz;
+	if (!ln)
+		return (0);
+	t = ((obj->x - mlx->cam->x) * obj->vx
+		+ (obj->y - mlx->cam->y) * obj->vy
+		+ (obj->z - mlx->cam->z) * obj->vz) / ln;
+	return (t);
 }
